@@ -28,3 +28,21 @@ export const getItems = async () => {
   }
   return data;
 };
+
+export const getItemById = async (id:string) => {
+  const supabase = createClient();
+  const {data, error} = await supabase.from("items").select("*").eq("id", id).single();
+  if(error){
+    throw new Error(error.message, {cause:error});
+  }
+  return data;
+};
+
+export const searchItems = async (query:string) => {
+  const supabase = createClient();
+  const {data, error} = await supabase.from("items").select("*").like("name", `%${query}%`);
+  if(error){
+    throw new Error(error.message, {cause:error});
+  }
+  return data;
+};
