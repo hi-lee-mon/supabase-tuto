@@ -1,6 +1,9 @@
 'use server';
 import { createClient } from "@/lib/supabase/server";
 import { currentUser } from "@/services/data/auth";
+import { Tables } from "@/types/types_db";
+
+type Item = Tables<"items">;
 
 export const createItem = async (formData: {
   name:string,
@@ -20,7 +23,7 @@ export const createItem = async (formData: {
   }
 };
 
-export const getItems = async () => {
+export const getItems = async (): Promise<Item[]> => {
   const supabase = createClient();
   const {data, error} = await supabase.from("items").select("*");
   if(error){
