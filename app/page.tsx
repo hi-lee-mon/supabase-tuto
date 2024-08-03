@@ -1,7 +1,8 @@
 import { Button } from "@/components/ui/button";
+import { signOut } from "@/services/action/auth";
 import { currentUser } from "@/services/data/auth";
-import { redirect } from 'next/navigation'
 import Link from "next/link";
+import { redirect } from 'next/navigation';
 
 export default async function Home() {
   // サーバー側で実行されるので、ログインしていないときはリダイレクトされる
@@ -13,8 +14,13 @@ export default async function Home() {
   return (
     <main className="">
       <h1>Home画面</h1>
+      <form action={signOut}>
+        <Button>ログアウト</Button>
+      </form>
       <Button asChild variant={"outline"}>
-        <Link href="/login">Login</Link>
+        <Link href="/login">
+          ログイン画面へ遷移
+        </Link>
       </Button>
     </main>
   );
