@@ -1,14 +1,11 @@
 'use server';
 import { createClient } from "@/lib/supabase/server";
 import { currentUser } from "@/services/data/auth";
-import { Tables } from "@/types/types_db";
+import { Tables, TablesInsert } from "@/types/types_db";
 
 type Item = Tables<"items">;
 
-export const createItem = async (formData: {
-  name:string,
-  amount:number,
-}) => {
+export const createItem = async (formData: TablesInsert<"items">) => {
   await new Promise((resolve) => setTimeout(resolve, 2000));
   const user = await currentUser();
   if(!user){
