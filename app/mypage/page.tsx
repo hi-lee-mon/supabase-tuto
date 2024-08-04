@@ -1,7 +1,7 @@
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { updateProfile } from "../action/profile"
-import { Button } from "@/components/ui/button"
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { updateProfile } from '../action/profile';
+import { Button } from '@/components/ui/button';
 
 export default function Page() {
   return (
@@ -12,5 +12,5 @@ export default function Page() {
         <Button>アップロード</Button>
       </div>
     </form>
-  )
+  );
 }

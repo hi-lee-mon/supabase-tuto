@@ -7,6 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "lint:prettier": "npx prettier --check .",
+    "fix:prettier": "npm run lint:prettier -- --write",
     "supabase:start": "npx supabase start",
     "supabase:stop": "npx supabase stop",
     "supabase:status": "npx supabase status",
@@ -34,6 +36,7 @@
     "react-dom": "^18",
     "react-hook-form": "^7.52.2",
     "server-only": "^0.0.1",
+    "supabase-demo": "file:",
     "tailwind-merge": "^2.4.0",
     "tailwindcss-animate": "^1.0.7",
     "zod": "^3.23.8"
