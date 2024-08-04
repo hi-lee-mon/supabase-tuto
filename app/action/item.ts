@@ -1,12 +1,12 @@
 'use server';
 import { createClient } from "@/lib/supabase/server";
 import { currentUser } from "@/services/data/auth";
-import { Tables, TablesInsert } from "@/types/types_db";
+import { Tables, TablesInsert, TablesUpdate } from "@/types/types_db";
 
 type Item = Tables<"items">;
 
 export const createItem = async (formData: TablesInsert<"items">) => {
-  await new Promise((resolve) => setTimeout(resolve, 2000));
+  await new Promise((resolve) => setTimeout(resolve, 1000));
   const user = await currentUser();
   if(!user){
     throw new Error("ログインしてください。");
@@ -38,9 +38,21 @@ export const getItemById = async (id:string) => {
   return data;
 };
 
-export const searchItems = async (query:string) => {
+const OR = " or "
+export const searchItems = async (keyword:string) => {
+  // 半角(\s)もしくは全角(\u3000)があればorで分割する
+  const newKeyword = keyword.replace(/[\u3000\s]+/g, OR);
   const supabase = createClient();
-  const {data, error} = await supabase.from("items").select("*").like("name", `%${query}%`);
+  let query = supabase.from("items").select("*");
+
+    if(newKeyword.match(OR)){
+    const keywords = newKeyword.split(OR).map((keyword)=> `%${keyword}%`);
+    // いずれかの部分一致
+    query = query.ilikeAnyOf("name",keywords);
+  }
+
+
+  const {data, error} = await query;
   if(error){
     throw new Error(error.message, {cause:error});
   }

@@ -34,12 +34,13 @@ export default async function Home() {
       <form action={
         async (data: FormData)=>{
           "use server";
-          const query = data.get("query") as string
 
-          redirect(`/search?q=${query}`)
+          const keyword = data.get("keyword") as string
+
+          redirect(`/search?q=${encodeURIComponent(keyword)}`)
         }
       } className="flex gap-2">
-        <Input name="query" type="text" autoComplete="off" className="flex-1"/>
+        <Input name="keyword" type="text" autoComplete="off" className="flex-1"/>
         <Button>検索</Button>
       </form>
       <div className="grid grid-cols-2 gap-6">
